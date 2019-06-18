@@ -16,17 +16,15 @@ public class GitHubController {
     private static final String key = "Ke1T@o904S";
 
     @PostMapping
-    public JsonNode postFunction(@RequestBody String json) throws IOException {
+    public void postFunction(@RequestBody String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(json);
 
         if (node.get("key").textValue().equals(key)) {
-            return node;
+            System.out.println(node);
         }
 
         System.out.println("エラー");
-        return null;
-
     }
 
 }
