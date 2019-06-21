@@ -24,7 +24,7 @@ repositories {
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'java'                              // standard Java tasks
 apply plugin: 'war'                               // standard Web Archive plugin
-apply plugin: "com.google.cloud.tools.appengine-standard"  // App Engine tasks
+apply plugin: "com.google.cloud.tools.appengine"  // App Engine tasks
 
 group = 'com.keita.katayama'
 version = '0.0.1-SNAPSHOT'
