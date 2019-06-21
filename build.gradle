@@ -1,28 +1,9 @@
-buildscript {
-	ext {
-		springBootVersion = '2.1.5.RELEASE'
-	}
-	repositories {
-		jcenter()
-		mavenCentral()
-	}
-
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
-}
-
-repositories {
-	maven {
-		url 'https://oss.sonatype.org/content/repositories/snapshots' // SNAPSHOT repository (if needed)
-	}
-	mavenCentral()
-	jcenter()
+plugins {
+	id 'org.springframework.boot' version '2.1.5.RELEASE'
+	id 'java'
 }
 
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'java'                              // standard Java tasks
-apply plugin: 'war'                               // standard Web Archive plugin
 
 group = 'com.keita.katayama'
 version = '0.0.1-SNAPSHOT'
@@ -34,31 +15,16 @@ configurations {
 	}
 }
 
+repositories {
+	mavenCentral()
+}
 
 dependencies {
-	apply plugin: 'groovy'
-	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-	compile 'jstl:jstl:1.2'
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.0.4.RELEASE'
-	compileOnly 'org.projectlombok:lombok:1.18.8'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.7'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
-	annotationProcessor 'org.projectlombok:lombok:1.18.8'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.0.4.RELEASE'
-	testCompile 'junit:junit:4.12'
-	testCompile 'com.google.truth:truth:0.33'
-	testCompile 'org.mockito:mockito-all:1.10.19'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-
-defaultTasks "clean", "build"
-
-
-task stage(type: Copy, dependsOn: [clean, build]) {
-	from jar.archivePath
-	into project.rootDir
-	rename {
-		'app.jar'
-	}
-}
-stage.mustRunAfter(clean)
