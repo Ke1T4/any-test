@@ -27,4 +27,9 @@ public class GitHubController {
         System.out.println("エラー");
     }
 
+    @PostMapping("/test")
+    public String testFunction() {
+        return "Hello World!!";
+    }
+
 }
