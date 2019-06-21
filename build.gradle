@@ -1,30 +1,15 @@
-plugins {
-	id 'org.springframework.boot' version '2.1.5.RELEASE'
-	id 'java'
-}
-
 buildscript {
+	ext {
+		springBootVersion = '2.1.5.RELEASE'
+	}
 	repositories {
 		jcenter()
 		mavenCentral()
 	}
+
 	dependencies {
-		classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.+' 
-	}
-}
-
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'java'                              // standard Java tasks
-apply plugin: 'war'                               // standard Web Archive plugin
-apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
-
-group = 'com.keita.katayama'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'com.google.cloud.tools:appengine-gradle-plugin:+'
 	}
 }
 
@@ -36,18 +21,34 @@ repositories {
 	jcenter()
 }
 
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'                              // standard Java tasks
+apply plugin: 'war'                               // standard Web Archive plugin
+apply plugin: "com.google.cloud.tools.appengine-standard"  // App Engine tasks
+
+group = 'com.keita.katayama'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+
 dependencies {
 	compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
 	apply plugin: 'groovy'
 	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 	compile 'jstl:jstl:1.2'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.0.4.RELEASE'
+	compileOnly 'org.projectlombok:lombok:1.18.8'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.7'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.0.4.RELEASE'
 	testCompile 'junit:junit:4.12'
 	testCompile 'com.google.truth:truth:0.33'
 	testCompile 'org.mockito:mockito-all:1.10.19'
@@ -61,10 +62,6 @@ appengineDeploy.dependsOn test
 appengineStage.dependsOn test
 
 appengine {  // App Engine tasks configuration
-	downloadSdk = true
-	appcfg {
-		oauth2 = true
-	}
 	deploy {   // deploy configuration
 
 	}
