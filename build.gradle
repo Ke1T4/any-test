@@ -57,6 +57,8 @@ dependencies {
 	testCompile 'com.google.appengine:appengine-tools-sdk:+'
 }
 
+defaultTasks "clean", "build"
+
 // Always run unit tests
 appengineDeploy.dependsOn test
 appengineStage.dependsOn test
