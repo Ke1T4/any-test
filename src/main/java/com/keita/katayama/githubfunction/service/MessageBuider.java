@@ -21,6 +21,10 @@ public class MessageBuider {
             stringBuilder.append("コメント：" + node.get("commits").get(0).get("message") + "\n");
             stringBuilder.append("URL：" + node.get("commits").get(0).get("url").toString());
         }
+
+        if (Objects.nonNull(node.get("pull_request"))) {
+
+        }
         return URLEncoder.encode(stringBuilder.toString(), "UTF-8");
     }
 }
