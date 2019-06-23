@@ -2,6 +2,8 @@ package com.keita.katayama.githubfunction;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class GithubFunctionApplication {
@@ -10,4 +12,8 @@ public class GithubFunctionApplication {
 		SpringApplication.run(GithubFunctionApplication.class, args);
 	}
 
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 }

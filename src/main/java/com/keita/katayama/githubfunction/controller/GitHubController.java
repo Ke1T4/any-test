@@ -2,6 +2,7 @@ package com.keita.katayama.githubfunction.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.keita.katayama.githubfunction.infrastructure.WorkplaceClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -9,23 +10,22 @@ import java.io.IOException;
 @RequestMapping
 @RestController
 public class GitHubController {
+    private final WorkplaceClient workplaceClient;
 
-    private static final String key = "Ke1T@o904S";
-//
-//    @PostMapping
-//    public void postFunction(
-//            @RequestBody String json,
-//            @RequestParam String url,
-//            @RequestParam String token) throws IOException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        JsonNode node = mapper.readTree(json);
-//
-//        if (node.get("key").textValue().equals(key)) {
-//            System.out.println(node);
-//        }
-//
-//        System.out.println("エラー");
-//    }
+    public GitHubController(WorkplaceClient workplaceClient) {
+        this.workplaceClient = workplaceClient;
+    }
+
+    @PostMapping("/github")
+    public void postFunction(
+            @RequestBody String json,
+            @RequestParam("token") String token) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(json);
+
+        String url = "https://graph.facebook.com/v3.0/group/feed?messege=" + json + "&access_token=" + token;
+        workplaceClient.sendFunction(url);
+    }
 
     @GetMapping
     public String testFunction() {
