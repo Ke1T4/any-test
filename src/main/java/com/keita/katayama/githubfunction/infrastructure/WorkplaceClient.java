@@ -17,8 +17,7 @@ public class WorkplaceClient {
     }
 
     public void sendFunction(String url) {
-        Object response = new Object();
-        restTemplate.postForLocation(URI.create(url),response);
+        restTemplate.postForLocation(URI.create(url), Object.class);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.keita.katayama.githubfunction.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.keita.katayama.githubfunction.infrastructure.WorkplaceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,7 @@ public class GitHubController {
             @RequestBody String json,
             @RequestParam("token") String token) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(json);
-        String url = "https://graph.facebook.com/v3.0/group/feed?messege=" + node.get("commits").get("message") + "&access_token=" + token;
+        String url = "https://graph.facebook.com/v3.0/group/feed?messege=" + "TEST" + "&access_token=" + token;
         workplaceClient.sendFunction(url);
     }
 
