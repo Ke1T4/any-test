@@ -17,9 +17,7 @@ public class GitHubController {
     MessageBuilder messageBuider;
 
     @PostMapping("/github")
-    public void postFunction(
-            @RequestBody String json,
-            @RequestParam("token") String token) throws IOException {
+    public void postFunction(@RequestBody String json, @RequestParam("token") String token) throws IOException {
         String message = messageBuider.createMessage(json);
         if (!StringUtils.isEmpty(message)) {
             String url = "https://graph.facebook.com/v3.0/group/feed?message=" + messageBuider.createMessage(json) + "&access_token=" + token;
