@@ -1,5 +1,6 @@
 package com.keita.katayama.githubfunction.infrastructure;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -7,7 +8,9 @@ import java.net.URI;
 
 @Component
 public class WorkplaceClient {
-    private final RestTemplate restTemplate;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public WorkplaceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
