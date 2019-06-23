@@ -9,9 +9,10 @@ import java.net.URLEncoder;
 import java.util.Objects;
 
 @Component
-public class MessageBuider {
+public class MessageBuilder {
 
     public String createMessage(String json) throws IOException {
+
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(json);
         StringBuilder stringBuilder = new StringBuilder();
@@ -22,8 +23,11 @@ public class MessageBuider {
             stringBuilder.append("URL：" + node.get("commits").get(0).get("url").toString());
         }
 
-        if (Objects.nonNull(node.get("pull_request"))) {
-
+        if (Objects.nonNull(node.get("pull_request")) && "\"opened\"".equals(node.get("action").toString())) {
+            stringBuilder.append(node.get("sender").get("login") + "さんがプルリクエストを作成しました！\n");
+            stringBuilder.append("タイトル：" + node.get("pull_request").get("title") + "\n");
+            stringBuilder.append("コメント：" + node.get("pull_request").get("body") + "\n");
+            stringBuilder.append("URL：" + node.get("pull_request").get("html_url"));
         }
         return URLEncoder.encode(stringBuilder.toString(), "UTF-8");
     }
