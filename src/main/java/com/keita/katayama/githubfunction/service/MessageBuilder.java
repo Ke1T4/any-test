@@ -17,10 +17,10 @@ public class MessageBuilder {
         JsonNode node = mapper.readTree(json);
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (Objects.nonNull(node.get("commits"))) {
-            stringBuilder.append(node.get("commits").get(0).get("committer").get("username") + "さんがコミットしました！\n");
-            stringBuilder.append("コメント：" + node.get("commits").get(0).get("message") + "\n");
-            stringBuilder.append("URL：" + node.get("commits").get(0).get("url").toString());
+        if (Objects.nonNull(node.get("head_commit"))) {
+            stringBuilder.append(node.get("head_commit").get("committer").get("username") + "さんがプッシュしました！\n");
+            stringBuilder.append("コメント：" + node.get("head_commit").get("message") + "\n");
+            stringBuilder.append("URL：" + node.get("head_commit").get("url").toString());
         }
 
         if (Objects.nonNull(node.get("pull_request")) && "\"opened\"".equals(node.get("action").toString())) {
@@ -29,6 +29,13 @@ public class MessageBuilder {
             stringBuilder.append("コメント：" + node.get("pull_request").get("body") + "\n");
             stringBuilder.append("URL：" + node.get("pull_request").get("html_url"));
         }
+
+        if (Objects.nonNull(node.get("comment"))) {
+            stringBuilder.append(node.get("comment").get("user").get("login") + "さんがコメントしました！\n");
+            stringBuilder.append("コメント：" + node.get("comment").get("body") + "\n");
+            stringBuilder.append("URL：" + node.get("comment").get("html_url"));
+        }
+
         return URLEncoder.encode(stringBuilder.toString(), "UTF-8");
     }
 }
