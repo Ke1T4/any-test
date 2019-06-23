@@ -16,12 +16,11 @@ public class MessageBuider {
         JsonNode node = mapper.readTree(json);
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (Objects.nonNull(node.get("commit"))) {
-            stringBuilder.append(node.get("commits").get(0).get("committer").get("username") + "さんがコミットしました\n");
+        if (Objects.nonNull(node.get("commits"))) {
+            stringBuilder.append(node.get("commits").get(0).get("committer").get("username") + "さんがコミットしました！\n");
             stringBuilder.append("コメント：" + node.get("commits").get(0).get("message") + "\n");
-            stringBuilder.append(URLEncoder.encode("URL：" + node.get("commits").get(0).get("url").toString(), "UTF-8"));
+            stringBuilder.append("URL：" + node.get("commits").get(0).get("url").toString());
         }
-
-        return stringBuilder.toString();
+        return URLEncoder.encode(stringBuilder.toString(), "UTF-8");
     }
 }
