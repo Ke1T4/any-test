@@ -17,7 +17,8 @@ public class MessageBuilder {
         JsonNode node = mapper.readTree(json);
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (Objects.nonNull(node.get("head_commit"))) {
+        if (Objects.nonNull(node.get("head_commit")) &&
+                !node.get("head_commit").get("message").toString().contains("Merge")) {
             stringBuilder.append(node.get("head_commit").get("committer").get("username") + "さんがプッシュしました！\n");
             stringBuilder.append("コメント：" + node.get("head_commit").get("message") + "\n");
             stringBuilder.append("URL：" + node.get("head_commit").get("url").toString());
